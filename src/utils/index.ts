@@ -49,7 +49,7 @@ export const NeyworkTimesKeys: { [key in StructuredKeys]: keyDataType }  = {
   [StructuredKeys.HEADLINE]: 'abstract',
   [StructuredKeys.PUBLISHED_DATE]: 'pub_date',
   [StructuredKeys.SECTION_NAME]: 'section_name',
-  [StructuredKeys.TITLE_IMG_URL]:'section_name',
+  [StructuredKeys.TITLE_IMG_URL]: { key: 'multimedia', value: 'url' },
 }
 
 export const NewsApiKeys: { [key in StructuredKeys]: keyDataType }  = {

@@ -10,6 +10,7 @@ const DateFilters = (): ReactElement => {
     <>
         <DatePicker
           label="From Date"
+          format='YYYY-MM-DD'
           defaultValue={dayjs(new Date())}
           onChange={(newValue) => {
             const fromDate = newValue?.format(DATE_FORMATTER_FOR_SOURCE[selectedSource])
@@ -20,6 +21,7 @@ const DateFilters = (): ReactElement => {
         />
         <DatePicker
           label="To Date"
+          format='YYYY-MM-DD'
           onChange={(newValue) => {
             const toDate = newValue?.format(DATE_FORMATTER_FOR_SOURCE[selectedSource])
             if (toDate) {

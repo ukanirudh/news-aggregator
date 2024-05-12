@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,15 +7,31 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { StructuredKeys, keyMapper } from "src/utils";
 import { useNewsFilters } from "src/context/NewsFiltersContext";
+import { NewsDataSource } from "src/contants";
 
 const NewsCard = ({ cardData }: { cardData: any }): ReactElement => {
   const { selectedSource } = useNewsFilters();
   const keysList = keyMapper[selectedSource];
 
   const onClick = () => {
-    const url  = typeof keysList[StructuredKeys.URL]  === 'string' ? cardData[keysList[StructuredKeys.URL]] : '';
+    const url = typeof keysList[StructuredKeys.URL] === 'string' ? cardData[keysList[StructuredKeys.URL]] : '';
     window.open(url, '_blank')
   }
+
+  const getImageUrl = useCallback((): string => {
+
+    if (typeof keysList[StructuredKeys.TITLE_IMG_URL] === 'string')
+      return cardData[keysList[StructuredKeys.TITLE_IMG_URL]]
+
+    if (typeof keysList[StructuredKeys.TITLE_IMG_URL] === 'object') {
+      const parentData = cardData[keysList[StructuredKeys.TITLE_IMG_URL].key];
+      // to be refactored, ny times has different structure
+      return selectedSource === NewsDataSource.NY_TIMES
+        ? `https://static01.nyt.com/${parentData?.[0]?.[keysList[StructuredKeys.TITLE_IMG_URL].value]}`
+        : parentData[keysList[StructuredKeys.TITLE_IMG_URL].value]
+    }
+    return '';
+  }, [cardData, keysList]);
 
   return (
     <Card onClick={onClick} raised sx={{
@@ -25,10 +41,7 @@ const NewsCard = ({ cardData }: { cardData: any }): ReactElement => {
         component="img"
         alt="image not found"
         height="140"
-        image={
-          (typeof keysList[StructuredKeys.TITLE_IMG_URL] === 'string' && cardData[keysList[StructuredKeys.TITLE_IMG_URL]]) 
-          || (typeof keysList[StructuredKeys.TITLE_IMG_URL] === 'object' && cardData[keysList[StructuredKeys.TITLE_IMG_URL].key][keysList[StructuredKeys.TITLE_IMG_URL].value])
-        }
+        image={getImageUrl()}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
