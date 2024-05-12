@@ -12,11 +12,12 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 const NewsList = (): ReactElement => {
   const { fetchNewsData, newsResults, isLoading } = useNewsSearch();
-  const { selectedSource, selectedQuery, currentPage, setCurrentPage } = useNewsFilters();
+  const { selectedSource, selectedQuery, currentPage, dateFilter, setCurrentPage } = useNewsFilters();
 
   useEffect(() => {
-    fetchNewsData(selectedSource, { searchStr: selectedQuery, currentPage });
-  }, [selectedSource, selectedQuery, currentPage]);
+    const { fromDate, toDate } = dateFilter;
+    fetchNewsData(selectedSource, { searchStr: selectedQuery, currentPage, fromDate, toDate });
+  }, [selectedSource, selectedQuery, currentPage, dateFilter]);
 
   const newResultsSet: Array<any> = useMemo(() => {
     return newsResults ? newsResults[API_RESULTS_DATA[selectedSource]] ? newsResults[API_RESULTS_DATA[selectedSource]] : [] : [];

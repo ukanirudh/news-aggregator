@@ -2,6 +2,18 @@ import { NewsDataSource } from 'src/contants';
 
 /* Utility to map different keys from different sources to single key */
 
+export const DATE_QUERY_KEY = {
+  [NewsDataSource.NEWS_API]: {from: 'from', to: 'to'},
+  [NewsDataSource.GUARDIAN]: {from: 'from-date', to: 'to-date'},
+  [NewsDataSource.NY_TIMES]: {from: 'begin_date', to: 'end_date'}
+}
+
+export const DATE_FORMATTER_FOR_SOURCE = {
+  [NewsDataSource.NEWS_API]: 'YYYY-MM-DD',
+  [NewsDataSource.GUARDIAN]: 'YYYY-MM-DD',
+  [NewsDataSource.NY_TIMES]: 'YYYYMMDD'
+}
+
 export const API_RESULTS_DATA = {
   [NewsDataSource.NEWS_API]: 'articles',
   [NewsDataSource.GUARDIAN]: 'results',

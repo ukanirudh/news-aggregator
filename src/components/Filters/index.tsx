@@ -6,6 +6,7 @@ import { NewsDataSource } from 'src/contants';
 import SearchBox from "src/components/Filters/Search";
 import Box from '@mui/material/Box';
 import { useNewsFilters } from "src/context/NewsFiltersContext";
+import DateFilters from "./DateFilters";
 
 const Filters = (): ReactElement => {
   const { selectedSource, setSelectedSource } = useNewsFilters();
@@ -35,6 +36,7 @@ const Filters = (): ReactElement => {
       p={2}
     >
       <SearchBox />
+      <DateFilters />
       <Button
         aria-controls={open ? 'news-data-source' : undefined}
         aria-haspopup="true"
