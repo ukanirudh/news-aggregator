@@ -34,3 +34,4 @@ Your app is ready to be deployed!
 1. Add debounce for search
 2. Hard-coded 2 check (with todo), need to be generalized
 3. Add advanced pagination, like the number of items per page, and 'show more' instead of next/previous page
+4. Move apikeys to a safe store in BE
